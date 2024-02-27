@@ -153,11 +153,12 @@ namespace ConsoleApp2
 
                 foreach (ManagementObject NetAdapter in searcher.Get())
                 {
+                    networkInfo += $"Adapter name: {NetAdapter["ProductName"]}\n";
                     foreach (PropertyData prop in NetAdapter.Properties)
                     {
                         networkInfo += $"{prop.Name}: {prop.Value}\n";
                     }
-                    networkInfo += $"\n\n";
+                    networkInfo += $"\n\n"; 
                 }
             }
 
