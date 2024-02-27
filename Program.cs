@@ -212,7 +212,7 @@ namespace ConsoleApp2
             }
 
             return Shared;
-        }  // Расшаренные папки
+        } 
 
         static void WriteToFile(string filePath, string sectionTitle, string sectionContent)
         {
