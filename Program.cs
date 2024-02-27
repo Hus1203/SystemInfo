@@ -10,6 +10,7 @@ namespace ConsoleApp2
 {
     class Program
     {
+        static string ServerName = "Server1"; // Имя сервера для нахождения расшаренных папок
         static void Main()
         {
             string outputFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ComputerInfoFiles");
@@ -45,14 +46,6 @@ namespace ConsoleApp2
 
             ObjectQuery query = new ObjectQuery("SELECT * FROM Win32_Processor");  //  Делаем запрос
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(query); // Осуществляем поиск по запросу 
-
-            //foreach (ManagementBaseObject obj in searcher.Get())
-            //{
-            //    foreach (PropertyData prop in obj.Properties)
-            //    {
-            //        result += $"{prop.Name}: {prop.Value}\n";
-            //    }
-            //}
 
             searcher = new ManagementObjectSearcher("SELECT * FROM Win32_BaseBoard");
             result += "\nМат.плата:\n";
@@ -201,18 +194,16 @@ namespace ConsoleApp2
         {
             string Shared = "\n";
 
-            using (ManagementClass shares = new ManagementClass(@"\\Server1", "Win32_Share", new ObjectGetOptions()))
+            using (ManagementClass shares = new ManagementClass($@"\\{ServerName}", "Win32_Share", new ObjectGetOptions()))
             {
                 foreach (ManagementObject share in shares.GetInstances())
                 {
                     Shared += $"Расшаренная папка: {share["Name"]}\n";
-                    Shared += $"Путь к папке: {share["Path"]}\n";
+                    Shared += $"Путь к папке: {share["Path"]}\n\n";
                 }
-                Shared += "\n\n";
             }
-
             return Shared;
-        } 
+        }  // Расшаренные папки
 
         static void WriteToFile(string filePath, string sectionTitle, string sectionContent)
         {
