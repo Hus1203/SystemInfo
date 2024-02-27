@@ -184,7 +184,7 @@ namespace ConsoleApp2
                 }
                 IPInterfaceStatistics mac = inf.GetIPStatistics(); 
                 networkInfo += $"MAC Адрес: {inf.GetPhysicalAddress()}\n"; 
-                
+               
             }
 
             return networkInfo;
